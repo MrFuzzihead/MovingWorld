@@ -1,14 +1,15 @@
 package darkevilmac.movingworld.common.entity;
 
-import darkevilmac.movingworld.MovingWorld;
-import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
+import java.util.HashSet;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 
-import java.util.HashSet;
+import darkevilmac.movingworld.MovingWorld;
+import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
 
 public abstract class MovingWorldHandlerCommon {
 
@@ -26,20 +27,24 @@ public abstract class MovingWorldHandlerCommon {
 
     public void onChunkUpdate() {
         MobileChunk chunk = getMovingWorld().getMovingWorldChunk();
-        getMovingWorld().getCapabilities().clearBlockCount();
+        getMovingWorld().getCapabilities()
+            .clearBlockCount();
         for (int i = chunk.minX(); i < chunk.maxX(); i++) {
             for (int j = chunk.minY(); j < chunk.maxY(); j++) {
                 for (int k = chunk.minZ(); k < chunk.maxZ(); k++) {
                     Block block = chunk.getBlock(i, j, k);
                     if (block.getMaterial() != Material.air) {
-                        getMovingWorld().getCapabilities().onChunkBlockAdded(block, chunk.getBlockMetadata(i, j, k), i, j, k);
+                        getMovingWorld().getCapabilities()
+                            .onChunkBlockAdded(block, chunk.getBlockMetadata(i, j, k), i, j, k);
                     }
                 }
             }
         }
 
-        getMovingWorld().setSize(Math.max(chunk.maxX() - chunk.minX(), chunk.maxZ() - chunk.minZ()), chunk.maxY() - chunk.minY());
-        World.MAX_ENTITY_RADIUS = Math.max(World.MAX_ENTITY_RADIUS, Math.max(getMovingWorld().width, getMovingWorld().height) + 2F);
+        getMovingWorld()
+            .setSize(Math.max(chunk.maxX() - chunk.minX(), chunk.maxZ() - chunk.minZ()), chunk.maxY() - chunk.minY());
+        World.MAX_ENTITY_RADIUS = Math
+            .max(World.MAX_ENTITY_RADIUS, Math.max(getMovingWorld().width, getMovingWorld().height) + 2F);
 
         try {
             getMovingWorld().fillAirBlocks(new HashSet<ChunkPosition>(), -1, -1, -1);
@@ -59,7 +64,9 @@ public abstract class MovingWorldHandlerCommon {
                 }
             }
         }
-        getMovingWorld().isFlying = getMovingWorld().getCapabilities().canFly();
-        getMovingWorld().getCapabilities().postBlockAdding();
+        getMovingWorld().isFlying = getMovingWorld().getCapabilities()
+            .canFly();
+        getMovingWorld().getCapabilities()
+            .postBlockAdding();
     }
 }

@@ -1,12 +1,13 @@
 package darkevilmac.movingworld.common.block;
 
-import darkevilmac.movingworld.common.tile.TileMovingWorldMarkingBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import darkevilmac.movingworld.common.tile.TileMovingWorldMarkingBlock;
 
 public abstract class BlockMovingWorldMarker extends BlockContainer {
 
@@ -16,9 +17,13 @@ public abstract class BlockMovingWorldMarker extends BlockContainer {
 
     public static void onPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
         if (world != null && !world.isRemote && entity != null && entity instanceof EntityPlayer) {
-            if (world.getTileEntity(x, y, z) != null && world.getTileEntity(x, y, z) instanceof TileMovingWorldMarkingBlock) {
+            if (world.getTileEntity(x, y, z) != null
+                && world.getTileEntity(x, y, z) instanceof TileMovingWorldMarkingBlock) {
                 TileMovingWorldMarkingBlock tile = (TileMovingWorldMarkingBlock) world.getTileEntity(x, y, z);
-                tile.getInfo().setOwner(((EntityPlayer) entity).getGameProfile().getId());
+                tile.getInfo()
+                    .setOwner(
+                        ((EntityPlayer) entity).getGameProfile()
+                            .getId());
             }
         }
     }
@@ -28,9 +33,13 @@ public abstract class BlockMovingWorldMarker extends BlockContainer {
         super.onBlockPlacedBy(world, x, y, z, entity, itemStack);
 
         if (world != null && !world.isRemote && entity != null && entity instanceof EntityPlayer) {
-            if (world.getTileEntity(x, y, z) != null && world.getTileEntity(x, y, z) instanceof TileMovingWorldMarkingBlock) {
+            if (world.getTileEntity(x, y, z) != null
+                && world.getTileEntity(x, y, z) instanceof TileMovingWorldMarkingBlock) {
                 TileMovingWorldMarkingBlock tile = (TileMovingWorldMarkingBlock) world.getTileEntity(x, y, z);
-                tile.getInfo().setOwner(((EntityPlayer) entity).getGameProfile().getId());
+                tile.getInfo()
+                    .setOwner(
+                        ((EntityPlayer) entity).getGameProfile()
+                            .getId());
             }
         }
     }

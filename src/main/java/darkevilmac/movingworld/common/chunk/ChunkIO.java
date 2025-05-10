@@ -1,19 +1,21 @@
 package darkevilmac.movingworld.common.chunk;
 
-import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.ChunkPosition;
-
 import java.io.*;
 import java.util.Collection;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.ChunkPosition;
+
+import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+
 public abstract class ChunkIO {
+
     public static void write(DataOutput out, MobileChunk chunk, Collection<ChunkPosition> blocks) throws IOException {
         out.writeShort(blocks.size());
         for (ChunkPosition p : blocks) {
@@ -33,7 +35,7 @@ public abstract class ChunkIO {
                 }
             }
         }
-        //ArchimedesShipMod.modLog.debug("Writing mobile chunk data: " + count + " blocks");
+        // ArchimedesShipMod.modLog.debug("Writing mobile chunk data: " + count + " blocks");
 
         out.writeShort(count);
         for (int i = chunk.minX(); i < chunk.maxX(); i++) {
@@ -66,7 +68,7 @@ public abstract class ChunkIO {
     public static void read(DataInput in, MobileChunk chunk) throws IOException {
         int count = in.readShort();
 
-        //ArchimedesShipMod.modLog.debug("Reading mobile chunk data: " + count + " blocks");
+        // ArchimedesShipMod.modLog.debug("Reading mobile chunk data: " + count + " blocks");
 
         int x, y, z;
         int id;
@@ -81,7 +83,8 @@ public abstract class ChunkIO {
         }
     }
 
-    public static void writeCompressed(ByteBuf buf, MobileChunk chunk, Collection<ChunkPosition> blocks) throws IOException {
+    public static void writeCompressed(ByteBuf buf, MobileChunk chunk, Collection<ChunkPosition> blocks)
+        throws IOException {
         DataOutputStream out = preCompress(buf);
         write(out, chunk, blocks);
         postCompress(buf, out, blocks.size());
@@ -105,10 +108,11 @@ public abstract class ChunkIO {
 
         int byteswritten = data.writerIndex();
         float f = (float) byteswritten / (count * 9);
-        // ArchimedesShipMod.modLog.debug(String.format(Locale.ENGLISH, "%d blocks written. Efficiency: %d/%d = %.2f", count, byteswritten, count * 9, f));
+        // ArchimedesShipMod.modLog.debug(String.format(Locale.ENGLISH, "%d blocks written. Efficiency: %d/%d = %.2f",
+        // count, byteswritten, count * 9, f));
 
         if (byteswritten > 32000) {
-            //  ArchimedesShipMod.modLog.warn("Ship probably contains too many blocks");
+            // ArchimedesShipMod.modLog.warn("Ship probably contains too many blocks");
         }
     }
 

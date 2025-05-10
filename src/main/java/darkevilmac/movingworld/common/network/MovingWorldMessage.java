@@ -1,10 +1,11 @@
 package darkevilmac.movingworld.common.network;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
 
 public abstract class MovingWorldMessage {
 

@@ -1,28 +1,40 @@
 package darkevilmac.movingworld.client.gui;
 
-import cpw.mods.fml.client.config.GuiConfig;
-import cpw.mods.fml.client.config.IConfigElement;
-import darkevilmac.movingworld.MovingWorld;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 
-import java.util.ArrayList;
-import java.util.List;
+import cpw.mods.fml.client.config.GuiConfig;
+import cpw.mods.fml.client.config.IConfigElement;
+import darkevilmac.movingworld.MovingWorld;
 
 public class MovingWorldConfigGUI extends GuiConfig {
 
     public MovingWorldConfigGUI(GuiScreen parentScreen) {
-        super(parentScreen, generateConfigList(), "MovingWorld",
-                false, false, GuiConfig.getAbridgedConfigPath(MovingWorld.instance.mConfig.getConfig().toString()));
+        super(
+            parentScreen,
+            generateConfigList(),
+            "MovingWorld",
+            false,
+            false,
+            GuiConfig.getAbridgedConfigPath(
+                MovingWorld.instance.mConfig.getConfig()
+                    .toString()));
     }
 
     public static List<IConfigElement> generateConfigList() {
 
         ArrayList<IConfigElement> elements = new ArrayList<IConfigElement>();
 
-        for (String name : MovingWorld.instance.mConfig.getConfig().getCategoryNames())
-            elements.add(new ConfigElement(MovingWorld.instance.mConfig.getConfig().getCategory(name)));
+        for (String name : MovingWorld.instance.mConfig.getConfig()
+            .getCategoryNames())
+            elements.add(
+                new ConfigElement(
+                    MovingWorld.instance.mConfig.getConfig()
+                        .getCategory(name)));
 
         return elements;
     }

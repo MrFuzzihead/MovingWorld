@@ -1,5 +1,15 @@
 package darkevilmac.movingworld.common.network;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunkClient;
@@ -9,17 +19,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 
 public class TileEntitiesMessage extends EntityMovingWorldMessage {
+
     private NBTTagCompound tagCompound;
 
     public TileEntitiesMessage() {
@@ -101,19 +103,19 @@ public class TileEntitiesMessage extends EntityMovingWorldMessage {
                 int y = nbt.getInteger("y");
                 int z = nbt.getInteger("z");
                 try {
-                    TileEntity te = movingWorld.getMovingWorldChunk().getTileEntity(x, y, z);
-                    if (te != null)
-                        te.readFromNBT(nbt);
+                    TileEntity te = movingWorld.getMovingWorldChunk()
+                        .getTileEntity(x, y, z);
+                    if (te != null) te.readFromNBT(nbt);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            ((MobileChunkClient) movingWorld.getMovingWorldChunk()).getRenderer().markDirty();
+            ((MobileChunkClient) movingWorld.getMovingWorldChunk()).getRenderer()
+                .markDirty();
         }
     }
 
     @Override
-    public void handleServerSide(EntityPlayer player) {
-    }
+    public void handleServerSide(EntityPlayer player) {}
 
 }

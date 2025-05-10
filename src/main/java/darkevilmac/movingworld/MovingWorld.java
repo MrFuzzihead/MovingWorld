@@ -1,5 +1,11 @@
 package darkevilmac.movingworld;
 
+import java.io.File;
+
+import net.minecraftforge.common.config.Configuration;
+
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -12,22 +18,25 @@ import darkevilmac.movingworld.common.mrot.MetaRotations;
 import darkevilmac.movingworld.common.network.MovingWorldMessageToMessageCodec;
 import darkevilmac.movingworld.common.network.MovingWorldPacketHandler;
 import darkevilmac.movingworld.common.network.NetworkUtil;
-import net.minecraftforge.common.config.Configuration;
-import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-
-@Mod(modid = MovingWorld.MOD_ID, name = MovingWorld.MOD_NAME, version = MovingWorld.MOD_VERSION, guiFactory = MovingWorld.MOD_GUIFACTORY)
+@Mod(
+    modid = MovingWorld.MODID,
+    name = MovingWorld.NAME,
+    version = MovingWorld.VERSION,
+    guiFactory = MovingWorld.GUIFACTORY)
 public class MovingWorld {
-    public static final String MOD_ID = "MovingWorld";
-    public static final String MOD_VERSION = "@MOVINGWORLDVER@";
-    public static final String MOD_NAME = "Moving World";
-    public static final String MOD_GUIFACTORY = "darkevilmac.movingworld.client.gui.MovingWorldGUIFactory";
 
-    @Mod.Instance(MOD_ID)
+    public static final String MODID = "movingworld";
+    public static final String VERSION = Tags.VERSION;
+    public static final String NAME = "MovingWorld";
+    public static final String GUIFACTORY = "darkevilmac.movingworld.client.gui.MovingWorldGUIFactory";
+
+    @Mod.Instance(value = MODID)
     public static MovingWorld instance;
 
-    @SidedProxy(clientSide = "darkevilmac.movingworld.client.ClientProxy", serverSide = "darkevilmac.movingworld.common.CommonProxy")
+    @SidedProxy(
+        clientSide = "darkevilmac.movingworld.client.ClientProxy",
+        serverSide = "darkevilmac.movingworld.common.CommonProxy")
     public static CommonProxy proxy;
 
     public static Logger logger;
@@ -44,8 +53,8 @@ public class MovingWorld {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         logger = e.getModLog();
-        File configFolder = new File(e.getModConfigurationDirectory(), "MovingWorld");
-        File mConfigFile = new File(configFolder, "Main.cfg");
+        File configFolder = new File(e.getModConfigurationDirectory(), MODID);
+        File mConfigFile = new File(configFolder, MODID + ".cfg");
         mConfig = new MainConfig(new Configuration(mConfigFile));
         mConfig.loadAndSave();
 
@@ -55,7 +64,8 @@ public class MovingWorld {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
-        network.channels = NetworkRegistry.INSTANCE.newChannel(MOD_ID, new MovingWorldMessageToMessageCodec(), new MovingWorldPacketHandler());
+        network.channels = NetworkRegistry.INSTANCE
+            .newChannel(MODID, new MovingWorldMessageToMessageCodec(), new MovingWorldPacketHandler());
         proxy.registerRenderers();
     }
 

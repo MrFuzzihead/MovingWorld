@@ -1,15 +1,17 @@
 package darkevilmac.movingworld.common.chunk.mobilechunk;
 
-import darkevilmac.movingworld.common.entity.EntityMovingWorld;
-import net.minecraft.block.Block;
-import net.minecraft.world.ChunkPosition;
-import net.minecraft.world.World;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.minecraft.block.Block;
+import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.World;
+
+import darkevilmac.movingworld.common.entity.EntityMovingWorld;
+
 public class MobileChunkServer extends MobileChunk {
+
     private Set<ChunkPosition> sendQueue;
 
     public MobileChunkServer(World world, EntityMovingWorld entityMovingWorld) {
@@ -40,6 +42,5 @@ public class MobileChunkServer extends MobileChunk {
     }
 
     @Override
-    protected void onSetBlockAsFilledAir(int x, int y, int z) {
-    }
+    protected void onSetBlockAsFilledAir(int x, int y, int z) {}
 }

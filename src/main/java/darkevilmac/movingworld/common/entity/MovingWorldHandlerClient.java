@@ -1,10 +1,12 @@
 package darkevilmac.movingworld.common.entity;
 
-import darkevilmac.movingworld.MovingWorld;
-import darkevilmac.movingworld.common.network.FarInteractMessage;
 import net.minecraft.entity.player.EntityPlayer;
 
+import darkevilmac.movingworld.MovingWorld;
+import darkevilmac.movingworld.common.network.FarInteractMessage;
+
 public abstract class MovingWorldHandlerClient extends MovingWorldHandlerCommon {
+
     public MovingWorldHandlerClient(EntityMovingWorld movingWorld) {
         super(movingWorld);
     }

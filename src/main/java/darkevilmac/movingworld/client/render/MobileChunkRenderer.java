@@ -1,9 +1,10 @@
 package darkevilmac.movingworld.client.render;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import darkevilmac.movingworld.MovingWorld;
-import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.*;
@@ -12,15 +13,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+
 import org.lwjgl.opengl.GL11;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import darkevilmac.movingworld.MovingWorld;
+import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
 
 @SideOnly(Side.CLIENT)
 public class MobileChunkRenderer {
+
     public boolean isInFrustum = false;
     /**
      * Should this renderer skip this render pass
@@ -117,12 +120,13 @@ public class MobileChunkRenderer {
         GL11.glColor4f(1F, 1F, 1F, 1F);
         World tesrDispatchWorld = TileEntityRendererDispatcher.instance.field_147550_f;
         TileEntity tileClone = tileentity;
-        //tileClone.setWorldObj();
-        //TileEntityRendererDispatcher.instance.func_147543_a();
+        // tileClone.setWorldObj();
+        // TileEntityRendererDispatcher.instance.func_147543_a();
 
         // TODO: Fakeworld
 
-        TileEntityRendererDispatcher.instance.renderTileEntityAt(tileentity, tileentity.xCoord, tileentity.yCoord, tileentity.zCoord, partialticks);
+        TileEntityRendererDispatcher.instance
+            .renderTileEntityAt(tileentity, tileentity.xCoord, tileentity.yCoord, tileentity.zCoord, partialticks);
     }
 
     private void updateRender() {

@@ -1,16 +1,19 @@
 package darkevilmac.movingworld.common.mrot;
 
-import darkevilmac.movingworld.MovingWorld;
-import net.minecraft.block.Block;
-import org.apache.commons.io.IOUtils;
-
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.block.Block;
+
+import org.apache.commons.io.IOUtils;
+
+import darkevilmac.movingworld.MovingWorld;
+
 public class MetaRotations {
+
     public Map<Integer, BlockMetaRotation> metaRotationMap;
     private File metaRotationsDirectory;
 
@@ -34,7 +37,15 @@ public class MetaRotations {
             MovingWorld.logger.error("Adding null block meta rotations");
             return;
         }
-        MovingWorld.logger.trace("Adding meta rotations (block=" + Block.blockRegistry.getNameForObject(block) + ", id=" + Block.getIdFromBlock(block) + ", mask=" + bitmask + ", rot=" + Arrays.toString(metarotation) + ")");
+        MovingWorld.logger.trace(
+            "Adding meta rotations (block=" + Block.blockRegistry.getNameForObject(block)
+                + ", id="
+                + Block.getIdFromBlock(block)
+                + ", mask="
+                + bitmask
+                + ", rot="
+                + Arrays.toString(metarotation)
+                + ")");
 
         metaRotationMap.put(Block.getIdFromBlock(block), new BlockMetaRotation(block, metarotation, bitmask));
     }
@@ -75,7 +86,7 @@ public class MetaRotations {
                     mrotError("Version number is invalid", lineno);
                     throw new OutdatedMrotException("?");
                 }
-                String modversion = /*ArchimedesShipMod.MOD_VERSION*/"NULL";
+                String modversion = /* ArchimedesShipMod.MOD_VERSION */"NULL";
                 String version = as[1].trim();
                 if (!version.equals(modversion)) {
                     throw new OutdatedMrotException(version);
@@ -104,7 +115,8 @@ public class MetaRotations {
             }
 
             try {
-                mask = Integer.decode(as[1].trim()).intValue();
+                mask = Integer.decode(as[1].trim())
+                    .intValue();
                 String[] srot = as[2].split(",");
                 for (int i = 0; i < rot.length; i++) {
                     rot[i] = Integer.parseInt(srot[i].trim());
@@ -146,11 +158,16 @@ public class MetaRotations {
             MovingWorld.logger.error("Could not load default meta rotations", e1);
         }
 
-        //Discover other defaults.
-        File vanillaMRot = new File(getClass().getResource("/mrot/vanilla.mrot").getPath());
+        // Discover other defaults.
+        File vanillaMRot = new File(
+            getClass().getResource("/mrot/vanilla.mrot")
+                .getPath());
         File modMetaRotations = new File(vanillaMRot.getParent() + "\\mod");
 
-        if (modMetaRotations != null && modMetaRotations.isDirectory() && modMetaRotations.listFiles() != null && !Arrays.asList(modMetaRotations.listFiles()).isEmpty()) {
+        if (modMetaRotations != null && modMetaRotations.isDirectory()
+            && modMetaRotations.listFiles() != null
+            && !Arrays.asList(modMetaRotations.listFiles())
+                .isEmpty()) {
             List<File> discovered = Arrays.asList(modMetaRotations.listFiles());
             if (discovered != null && !discovered.isEmpty()) {
                 for (File file : discovered) {
@@ -164,6 +181,7 @@ public class MetaRotations {
         }
 
         File[] files = metaRotationsDirectory.listFiles(new FilenameFilter() {
+
             @Override
             public boolean accept(File f, String name) {
                 return !name.equals("vanilla.mrot") && name.endsWith(".mrot");
@@ -188,7 +206,8 @@ public class MetaRotations {
 
         BufferedReader reader = new BufferedReader(new FileReader(file));
         boolean flag = parseMetaRotations(reader);
-        if (!flag && file.getName().equals("vanilla.mrot")) {
+        if (!flag && file.getName()
+            .equals("vanilla.mrot")) {
             throw new OutdatedMrotException("pre-1.4.4");
         }
         reader.close();

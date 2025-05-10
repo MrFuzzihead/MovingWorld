@@ -1,15 +1,5 @@
 package darkevilmac.movingworld.common.chunk.assembly;
 
-import darkevilmac.movingworld.MovingWorld;
-import darkevilmac.movingworld.common.chunk.LocatedBlock;
-import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
-import darkevilmac.movingworld.common.entity.EntityMovingWorld;
-import darkevilmac.movingworld.common.event.DisassembleBlockEvent;
-import darkevilmac.movingworld.common.tile.IMovingWorldTileEntity;
-import darkevilmac.movingworld.common.tile.TileMovingWorldMarkingBlock;
-import darkevilmac.movingworld.common.util.FloodFiller;
-import darkevilmac.movingworld.common.util.LocatedBlockList;
-import darkevilmac.movingworld.common.util.MathHelperMod;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +10,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import darkevilmac.movingworld.MovingWorld;
+import darkevilmac.movingworld.common.chunk.LocatedBlock;
+import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
+import darkevilmac.movingworld.common.entity.EntityMovingWorld;
+import darkevilmac.movingworld.common.event.DisassembleBlockEvent;
+import darkevilmac.movingworld.common.tile.IMovingWorldTileEntity;
+import darkevilmac.movingworld.common.tile.TileMovingWorldMarkingBlock;
+import darkevilmac.movingworld.common.util.FloodFiller;
+import darkevilmac.movingworld.common.util.LocatedBlockList;
+import darkevilmac.movingworld.common.util.MathHelperMod;
+
 public class ChunkDisassembler {
+
     public boolean overwrite;
     private EntityMovingWorld movingWorld;
     private AssembleResult result;
@@ -42,7 +44,7 @@ public class ChunkDisassembler {
         yaw = (float) Math.toRadians(yaw);
 
         float ox = -chunk.getCenterX();
-        float oy = -chunk.minY(); //Created the normal way, through a VehicleFiller, this value will always be 0.
+        float oy = -chunk.minY(); // Created the normal way, through a VehicleFiller, this value will always be 0.
         float oz = -chunk.getCenterZ();
 
         Vec3 vec = Vec3.createVectorHelper(0D, 0D, 0D);
@@ -62,7 +64,10 @@ public class ChunkDisassembler {
                     iz = MathHelperMod.round_double(vec.zCoord + movingWorld.posZ);
 
                     block = world.getBlock(ix, iy, iz);
-                    if ((block != null && !block.isAir(world, ix, iy, iz) && !block.getMaterial().isLiquid() && !assemblyInteractor.canOverwriteBlock(block)) || vec.yCoord > world.getActualHeight()) {
+                    if ((block != null && !block.isAir(world, ix, iy, iz)
+                        && !block.getMaterial()
+                            .isLiquid()
+                        && !assemblyInteractor.canOverwriteBlock(block)) || vec.yCoord > world.getActualHeight()) {
                         return false;
                     }
                 }
@@ -73,7 +78,8 @@ public class ChunkDisassembler {
 
     public AssembleResult doDisassemble(MovingWorldAssemblyInteractor assemblyInteractor) {
         tileMarker = null;
-        if (movingWorld.getMobileChunk().marker != null && movingWorld.getMobileChunk().marker.tileEntity != null && movingWorld.getMobileChunk().marker.tileEntity instanceof TileMovingWorldMarkingBlock)
+        if (movingWorld.getMobileChunk().marker != null && movingWorld.getMobileChunk().marker.tileEntity != null
+            && movingWorld.getMobileChunk().marker.tileEntity instanceof TileMovingWorldMarkingBlock)
             tileMarker = (TileMovingWorldMarkingBlock) movingWorld.getMobileChunk().marker.tileEntity;
 
         removedFluidBlocks = new LocatedBlockList();
@@ -91,11 +97,13 @@ public class ChunkDisassembler {
         movingWorld.rotationPitch = 0F;
         float yaw = currentRot * MathHelperMod.PI_HALF;
 
-        boolean flag = world.getGameRules().getGameRuleBooleanValue("doTileDrops");
-        world.getGameRules().setOrCreateGameRule("doTileDrops", "false");
+        boolean flag = world.getGameRules()
+            .getGameRuleBooleanValue("doTileDrops");
+        world.getGameRules()
+            .setOrCreateGameRule("doTileDrops", "false");
 
         float ox = -chunk.getCenterX();
-        float oy = -chunk.minY(); //Created the normal way, through a ChunkAssembler, this value will always be 0.
+        float oy = -chunk.minY(); // Created the normal way, through a ChunkAssembler, this value will always be 0.
         float oz = -chunk.getCenterZ();
 
         LocatedBlockList lbList = new LocatedBlockList();
@@ -128,16 +136,26 @@ public class ChunkDisassembler {
                     iy = MathHelperMod.round_double(vec.yCoord + movingWorld.posY);
                     iz = MathHelperMod.round_double(vec.zCoord + movingWorld.posZ);
 
-                    lbList.add(new LocatedBlock(block, meta, tileentity, new ChunkPosition(ix, iy, iz), new ChunkPosition(i, j, k)));
+                    lbList.add(
+                        new LocatedBlock(
+                            block,
+                            meta,
+                            tileentity,
+                            new ChunkPosition(ix, iy, iz),
+                            new ChunkPosition(i, j, k)));
                 }
             }
         }
 
         LocatedBlockList postList = new LocatedBlockList();
 
-        postList = processLocatedBlockList(world, lbList, postList, assemblyInteractor, fillableBlocks, currentRot); // Needs to be threaded
+        postList = processLocatedBlockList(world, lbList, postList, assemblyInteractor, fillableBlocks, currentRot); // Needs
+                                                                                                                     // to
+                                                                                                                     // be
+                                                                                                                     // threaded
 
-        world.getGameRules().setOrCreateGameRule("doTileDrops", String.valueOf(flag));
+        world.getGameRules()
+            .setOrCreateGameRule("doTileDrops", String.valueOf(flag));
 
         // finish blocks that weren't set due to minecraft limitations
         for (LocatedBlock ilb : postList) {
@@ -156,7 +174,8 @@ public class ChunkDisassembler {
 
         movingWorld.setDead();
 
-        if (this.result.movingWorldMarkingBlock == null || !assemblyInteractor.isTileMovingWorldMarker(result.movingWorldMarkingBlock.tileEntity)) {
+        if (this.result.movingWorldMarkingBlock == null
+            || !assemblyInteractor.isTileMovingWorldMarker(result.movingWorldMarkingBlock.tileEntity)) {
             this.result.resultCode = AssembleResult.RESULT_MISSING_MARKER;
         } else {
             this.result.checkConsistent(world);
@@ -167,7 +186,8 @@ public class ChunkDisassembler {
         return result;
     }
 
-    LocatedBlockList processLocatedBlockList(World world, LocatedBlockList locatedBlocks, LocatedBlockList postList, MovingWorldAssemblyInteractor assemblyInteractor, LocatedBlockList fillList, int currentRot) {
+    LocatedBlockList processLocatedBlockList(World world, LocatedBlockList locatedBlocks, LocatedBlockList postList,
+        MovingWorldAssemblyInteractor assemblyInteractor, LocatedBlockList fillList, int currentRot) {
         LocatedBlockList retPostList = new LocatedBlockList();
         retPostList.addAll(postList);
 
@@ -191,11 +211,12 @@ public class ChunkDisassembler {
 
             owBlock = world.getBlock(ix, iy, iz);
             owMeta = world.getBlockMetadata(ix, iy, iz);
-            if (owBlock != null)
-                assemblyInteractor.blockOverwritten(owBlock);
+            if (owBlock != null) assemblyInteractor.blockOverwritten(owBlock);
 
             if (!fillList.containsLBOfPos(locatedBlock.coordsNoOffset)) {
-                if (world.getBlock(ix, iy, iz).getMaterial().isLiquid()) {
+                if (world.getBlock(ix, iy, iz)
+                    .getMaterial()
+                    .isLiquid()) {
                     if (!removedFluidBlocks.containsLBOfPos(locatedBlock.coords))
                         removedFluidBlocks.add(new LocatedBlock(owBlock, owMeta, new ChunkPosition(ix, iy, iz)));
                 }
@@ -220,12 +241,13 @@ public class ChunkDisassembler {
                 tileentity.writeToNBT(tileTag);
 
                 world.setTileEntity(ix, iy, iz, tileentity);
-                world.getTileEntity(ix, iy, iz).readFromNBT(tileTag);
+                world.getTileEntity(ix, iy, iz)
+                    .readFromNBT(tileTag);
                 tileentity.validate();
                 tileentity = world.getTileEntity(ix, iy, iz);
 
                 if (tileMarker != null && new ChunkPosition(tileMarker.xCoord, tileMarker.yCoord, tileMarker.zCoord)
-                        .equals(new ChunkPosition(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord))) {
+                    .equals(new ChunkPosition(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord))) {
                     tileMarker = (TileMovingWorldMarkingBlock) tileentity;
                 }
             }
@@ -242,7 +264,12 @@ public class ChunkDisassembler {
                 tileentity = world.getTileEntity(ix, iy, iz);
             }
 
-            LocatedBlock lb = new LocatedBlock(block, meta, tileentity, new ChunkPosition(ix, iy, iz), new ChunkPosition(i, j, k));
+            LocatedBlock lb = new LocatedBlock(
+                block,
+                meta,
+                tileentity,
+                new ChunkPosition(ix, iy, iz),
+                new ChunkPosition(i, j, k));
             assemblyInteractor.blockDisassembled(lb);
             DisassembleBlockEvent event = new DisassembleBlockEvent(lb);
             MinecraftForge.EVENT_BUS.post(event);

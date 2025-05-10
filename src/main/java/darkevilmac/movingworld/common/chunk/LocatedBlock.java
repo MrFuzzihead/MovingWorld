@@ -7,6 +7,7 @@ import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 
 public class LocatedBlock {
+
     public final Block block;
     public final int blockMeta;
     public final TileEntity tileEntity;
@@ -17,7 +18,8 @@ public class LocatedBlock {
         this(block, meta, null, coords, null);
     }
 
-    public LocatedBlock(Block block, int meta, TileEntity tileentity, ChunkPosition coords, ChunkPosition coordsNoOffset) {
+    public LocatedBlock(Block block, int meta, TileEntity tileentity, ChunkPosition coords,
+        ChunkPosition coordsNoOffset) {
         this.block = block;
         blockMeta = meta;
         tileEntity = tileentity;
@@ -35,7 +37,17 @@ public class LocatedBlock {
 
     @Override
     public String toString() {
-        return new StringBuilder("LocatedBlock [block=").append(block).append(", meta=").append(blockMeta).append(", coords=[").append(coords.chunkPosX).append(", ").append(coords.chunkPosY).append(", ").append(coords.chunkPosZ).append("]]").toString();
+        return new StringBuilder("LocatedBlock [block=").append(block)
+            .append(", meta=")
+            .append(blockMeta)
+            .append(", coords=[")
+            .append(coords.chunkPosX)
+            .append(", ")
+            .append(coords.chunkPosY)
+            .append(", ")
+            .append(coords.chunkPosZ)
+            .append("]]")
+            .toString();
     }
 
     public void writeToNBT(NBTTagCompound comp) {

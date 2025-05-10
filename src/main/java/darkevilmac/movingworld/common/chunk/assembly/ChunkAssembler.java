@@ -1,19 +1,21 @@
 package darkevilmac.movingworld.common.chunk.assembly;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.World;
+
 import darkevilmac.movingworld.MovingWorld;
 import darkevilmac.movingworld.common.block.BlockMovingWorldMarker;
 import darkevilmac.movingworld.common.chunk.LocatedBlock;
 import darkevilmac.movingworld.common.chunk.MovingWorldSizeOverflowException;
 import darkevilmac.movingworld.common.tile.TileMovingWorldMarkingBlock;
-import net.minecraft.block.Block;
-import net.minecraft.world.ChunkPosition;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 public class ChunkAssembler {
+
     public final int startX, startY, startZ;
     private final int maxBlocks;
     private World worldObj;
@@ -38,7 +40,13 @@ public class ChunkAssembler {
             if (MovingWorld.instance.mConfig.iterativeAlgorithm) {
                 assembleIterative(result, result.assemblyInteractor, startX, startY, startZ);
             } else {
-                assembleRecursive(result, new HashSet<ChunkPosition>(), result.assemblyInteractor, startX, startY, startZ);
+                assembleRecursive(
+                    result,
+                    new HashSet<ChunkPosition>(),
+                    result.assemblyInteractor,
+                    startX,
+                    startY,
+                    startZ);
             }
             if (result.movingWorldMarkingBlock == null) {
                 result.resultCode = AssembleResult.RESULT_MISSING_MARKER;
@@ -54,7 +62,8 @@ public class ChunkAssembler {
         return result;
     }
 
-    private void assembleIterative(AssembleResult result, MovingWorldAssemblyInteractor assemblyInteractor, int sX, int sY, int sZ) throws MovingWorldSizeOverflowException {
+    private void assembleIterative(AssembleResult result, MovingWorldAssemblyInteractor assemblyInteractor, int sX,
+        int sY, int sZ) throws MovingWorldSizeOverflowException {
         HashSet<ChunkPosition> openSet = new HashSet<ChunkPosition>();
         HashSet<ChunkPosition> closedSet = new HashSet<ChunkPosition>();
         List<ChunkPosition> iterator = new ArrayList<ChunkPosition>();
@@ -89,11 +98,16 @@ public class ChunkAssembler {
                     continue;
                 }
 
-                LocatedBlock lb = new LocatedBlock(block, worldObj.getBlockMetadata(x, y, z), worldObj.getTileEntity(x, y, z), pos, null);
+                LocatedBlock lb = new LocatedBlock(
+                    block,
+                    worldObj.getBlockMetadata(x, y, z),
+                    worldObj.getTileEntity(x, y, z),
+                    pos,
+                    null);
                 assemblyInteractor.blockAssembled(lb);
-                if ((lb.block != null && lb.block instanceof BlockMovingWorldMarker) || (lb.tileEntity != null && lb.tileEntity instanceof TileMovingWorldMarkingBlock)) {
-                    if (movingWorldMarker == null)
-                        movingWorldMarker = lb;
+                if ((lb.block != null && lb.block instanceof BlockMovingWorldMarker)
+                    || (lb.tileEntity != null && lb.tileEntity instanceof TileMovingWorldMarkingBlock)) {
+                    if (movingWorldMarker == null) movingWorldMarker = lb;
                 }
                 result.assembleBlock(lb);
 
@@ -127,7 +141,8 @@ public class ChunkAssembler {
         result.movingWorldMarkingBlock = movingWorldMarker;
     }
 
-    private void assembleRecursive(AssembleResult result, HashSet<ChunkPosition> set, MovingWorldAssemblyInteractor assemblyInteractor, int x, int y, int z) throws MovingWorldSizeOverflowException {
+    private void assembleRecursive(AssembleResult result, HashSet<ChunkPosition> set,
+        MovingWorldAssemblyInteractor assemblyInteractor, int x, int y, int z) throws MovingWorldSizeOverflowException {
         LocatedBlock movingWorldMarker = null;
 
         if (result.assembledBlocks.size() > maxBlocks) {
@@ -146,11 +161,16 @@ public class ChunkAssembler {
             return;
         }
 
-        LocatedBlock lb = new LocatedBlock(block, worldObj.getBlockMetadata(x, y, z), worldObj.getTileEntity(x, y, z), pos, null);
+        LocatedBlock lb = new LocatedBlock(
+            block,
+            worldObj.getBlockMetadata(x, y, z),
+            worldObj.getTileEntity(x, y, z),
+            pos,
+            null);
         assemblyInteractor.blockAssembled(lb);
-        if ((lb.block != null && lb.block instanceof BlockMovingWorldMarker) || (lb.tileEntity != null && lb.tileEntity instanceof TileMovingWorldMarkingBlock)) {
-            if (movingWorldMarker == null)
-                movingWorldMarker = lb;
+        if ((lb.block != null && lb.block instanceof BlockMovingWorldMarker)
+            || (lb.tileEntity != null && lb.tileEntity instanceof TileMovingWorldMarkingBlock)) {
+            if (movingWorldMarker == null) movingWorldMarker = lb;
         }
         result.assembleBlock(lb);
 
@@ -182,7 +202,8 @@ public class ChunkAssembler {
         result.movingWorldMarkingBlock = movingWorldMarker;
     }
 
-    public CanAssemble canUseBlockForVehicle(Block block, MovingWorldAssemblyInteractor assemblyInteractor, int x, int y, int z) {
+    public CanAssemble canUseBlockForVehicle(Block block, MovingWorldAssemblyInteractor assemblyInteractor, int x,
+        int y, int z) {
         return assemblyInteractor.isBlockAllowed(worldObj, block, x, y, z);
     }
 

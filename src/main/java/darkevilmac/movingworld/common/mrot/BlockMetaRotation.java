@@ -3,6 +3,7 @@ package darkevilmac.movingworld.common.mrot;
 import net.minecraft.block.Block;
 
 public class BlockMetaRotation {
+
     public final Block block;
     public final int[] metaRotation;
     private int bitMask;

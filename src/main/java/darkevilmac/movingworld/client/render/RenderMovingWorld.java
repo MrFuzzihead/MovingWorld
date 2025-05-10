@@ -1,15 +1,18 @@
 package darkevilmac.movingworld.client.render;
 
-import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunkClient;
-import darkevilmac.movingworld.common.entity.EntityMovingWorld;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
+import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunkClient;
+import darkevilmac.movingworld.common.entity.EntityMovingWorld;
+
 public class RenderMovingWorld extends Render {
+
     public RenderMovingWorld() {
         shadowSize = 1F;
     }
@@ -28,13 +31,20 @@ public class RenderMovingWorld extends Render {
         GL11.glRotatef(yaw, 0F, 1F, 0F);
         GL11.glRotatef(pitch, rx, 0f, rz);
 
-        float fx = entity.getMovingWorldChunk().getCenterX();
-        float fz = entity.getMovingWorldChunk().getCenterZ();
-        GL11.glTranslatef(-fx, -entity.getMovingWorldChunk().minY(), -fz); //minY is always 0
+        float fx = entity.getMovingWorldChunk()
+            .getCenterX();
+        float fz = entity.getMovingWorldChunk()
+            .getCenterZ();
+        GL11.glTranslatef(
+            -fx,
+            -entity.getMovingWorldChunk()
+                .minY(),
+            -fz); // minY is always 0
 
-        //float f4 = 0.75F;
+        // float f4 = 0.75F;
         bindEntityTexture(entity);
-        ((MobileChunkClient) entity.getMovingWorldChunk()).getRenderer().render(0F);
+        ((MobileChunkClient) entity.getMovingWorldChunk()).getRenderer()
+            .render(0F);
         GL11.glPopMatrix();
 
         GL11.glPopAttrib();

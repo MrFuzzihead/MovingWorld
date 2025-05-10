@@ -1,14 +1,15 @@
 package darkevilmac.movingworld.common.chunk.assembly;
 
+import net.minecraft.block.Block;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import darkevilmac.movingworld.MovingWorld;
 import darkevilmac.movingworld.common.block.BlockMovingWorldMarker;
 import darkevilmac.movingworld.common.chunk.LocatedBlock;
 import darkevilmac.movingworld.common.tile.TileMovingWorldMarkingBlock;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.block.Block;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 /**
  * Used for storing information given by and taken by the (Dis)Assembler
@@ -29,20 +30,17 @@ public class MovingWorldAssemblyInteractor {
         return MovingWorld.instance.mConfig.diagonalAssembly;
     }
 
-    public void toByteBuf(ByteBuf byteBuf) {
-    }
+    public void toByteBuf(ByteBuf byteBuf) {}
 
     /**
      * Called when a block is assembled to your moving world.
      */
-    public void blockAssembled(LocatedBlock locatedBlock) {
-    }
+    public void blockAssembled(LocatedBlock locatedBlock) {}
 
     /**
      * Called when a block is disassembled to your moving world.
      */
-    public void blockDisassembled(LocatedBlock locatedBlock) {
-    }
+    public void blockDisassembled(LocatedBlock locatedBlock) {}
 
     /**
      * @return returns if it is an over writable block in the config.
@@ -54,31 +52,28 @@ public class MovingWorldAssemblyInteractor {
     /**
      * Called when a block is overwritten when a moving world is disassembled.
      */
-    public void blockOverwritten(Block block) {
-    }
+    public void blockOverwritten(Block block) {}
 
     /**
      * Called when a block is rotated during disassembling.
      */
-    public void blockRotated(Block block, World world, int x, int y, int z, int deltarot) {
-    }
+    public void blockRotated(Block block, World world, int x, int y, int z, int deltarot) {}
 
     /**
      * Called when a chunk assembly has finished.
      */
-    public void chunkAssembled(AssembleResult assembleResult) {
-    }
+    public void chunkAssembled(AssembleResult assembleResult) {}
 
     /**
      * Called when a chunk disassembly has finished.
      */
-    public void chunkDissasembled(AssembleResult assembleResult) {
-    }
+    public void chunkDissasembled(AssembleResult assembleResult) {}
 
     public CanAssemble isBlockAllowed(World world, Block block, int x, int y, int z) {
         CanAssemble canAssemble = new CanAssemble(false, false);
 
-        canAssemble.justCancel = !(!block.isAir(world, x, y, z) && !block.getMaterial().isLiquid() && MovingWorld.instance.mConfig.isBlockAllowed(block));
+        canAssemble.justCancel = !(!block.isAir(world, x, y, z) && !block.getMaterial()
+            .isLiquid() && MovingWorld.instance.mConfig.isBlockAllowed(block));
 
         return canAssemble;
     }
@@ -96,16 +91,13 @@ public class MovingWorldAssemblyInteractor {
      *
      * @param compound
      */
-    public void writeNBTFully(NBTTagCompound compound) {
-    }
-
+    public void writeNBTFully(NBTTagCompound compound) {}
 
     /**
      * Write metadata to NBT.
      *
      * @param compound
      */
-    public void writeNBTMetadata(NBTTagCompound compound) {
-    }
+    public void writeNBTMetadata(NBTTagCompound compound) {}
 
 }

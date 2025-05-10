@@ -1,14 +1,14 @@
 package darkevilmac.movingworld.common.util;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import darkevilmac.movingworld.common.chunk.LocatedBlock;
-import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.world.ChunkPosition;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import darkevilmac.movingworld.common.chunk.LocatedBlock;
+import darkevilmac.movingworld.common.chunk.mobilechunk.MobileChunk;
 
 /**
  * Flood fill algorithm for finding if something is water tight.
@@ -25,7 +25,14 @@ public class FloodFiller {
     public LocatedBlockList floodFillMobileChunk(MobileChunk mobileChunk) {
         lbList = new LocatedBlockList();
 
-        fillCoord(mobileChunk, mobileChunk.maxX() / 2, mobileChunk.maxY() + 1, mobileChunk.maxZ() / 2); // We start just outside of the bounds, this is so we don't start filling inside a room or something.
+        fillCoord(mobileChunk, mobileChunk.maxX() / 2, mobileChunk.maxY() + 1, mobileChunk.maxZ() / 2); // We start just
+                                                                                                        // outside of
+                                                                                                        // the bounds,
+                                                                                                        // this is so we
+                                                                                                        // don't start
+                                                                                                        // filling
+                                                                                                        // inside a room
+                                                                                                        // or something.
         cleanList(mobileChunk); // Clean the list of any out of bounds stuff.
 
         return lbList;
@@ -40,10 +47,11 @@ public class FloodFiller {
         while (lbIterator.hasNext()) {
             ChunkPosition lbPos = lbIterator.next().coords;
 
-            if (lbPos.chunkPosX > (mobileChunk.maxX() - 1) || lbPos.chunkPosX < mobileChunk.minX() ||
-                    lbPos.chunkPosY > (mobileChunk.maxY() - 1) || lbPos.chunkPosY < mobileChunk.minY() ||
-                    lbPos.chunkPosZ > (mobileChunk.maxZ() - 1) || lbPos.chunkPosZ < mobileChunk.minZ()
-                    ) {
+            if (lbPos.chunkPosX > (mobileChunk.maxX() - 1) || lbPos.chunkPosX < mobileChunk.minX()
+                || lbPos.chunkPosY > (mobileChunk.maxY() - 1)
+                || lbPos.chunkPosY < mobileChunk.minY()
+                || lbPos.chunkPosZ > (mobileChunk.maxZ() - 1)
+                || lbPos.chunkPosZ < mobileChunk.minZ()) {
                 lbIterator.remove();
             }
         }
@@ -64,15 +72,15 @@ public class FloodFiller {
             int z = pos.chunkPosZ;
 
             if (block == null || block instanceof BlockAir || block.isAir(mobileChunk, x, y, z)) {
-                if (x > mobileChunk.maxX() || x < mobileChunk.minX() - 1 ||
-                        y > mobileChunk.maxY() + 1 || y < mobileChunk.minY() - 1 ||
-                        z > mobileChunk.maxZ() || z < mobileChunk.minZ() - 1
-                        ) {
+                if (x > mobileChunk.maxX() || x < mobileChunk.minX() - 1
+                    || y > mobileChunk.maxY() + 1
+                    || y < mobileChunk.minY() - 1
+                    || z > mobileChunk.maxZ()
+                    || z < mobileChunk.minZ() - 1) {
                     continue;
                 }
 
-                if (lbList.containsLBOfPos(pos))
-                    continue;
+                if (lbList.containsLBOfPos(pos)) continue;
 
                 lbList.add(new LocatedBlock(block, blockMeta, pos));
 

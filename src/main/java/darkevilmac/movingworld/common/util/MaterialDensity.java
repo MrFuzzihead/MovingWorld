@@ -1,12 +1,13 @@
 package darkevilmac.movingworld.common.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+
 public class MaterialDensity {
+
     public static final float WATER_DENSITY = 1.000F;
     public static final float DEFAULT_DENSITY = 0.34f;
 

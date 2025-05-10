@@ -1,12 +1,7 @@
 package darkevilmac.movingworld.common.tile;
 
-import darkevilmac.movingworld.common.chunk.LocatedBlock;
-import darkevilmac.movingworld.common.chunk.assembly.AssembleResult;
-import darkevilmac.movingworld.common.chunk.assembly.ChunkAssembler;
-import darkevilmac.movingworld.common.chunk.assembly.MovingWorldAssemblyInteractor;
-import darkevilmac.movingworld.common.entity.EntityMovingWorld;
-import darkevilmac.movingworld.common.entity.MovingWorldInfo;
-import darkevilmac.movingworld.common.util.LocatedBlockList;
+import java.util.UUID;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,11 +13,18 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 
-import java.util.UUID;
+import darkevilmac.movingworld.common.chunk.LocatedBlock;
+import darkevilmac.movingworld.common.chunk.assembly.AssembleResult;
+import darkevilmac.movingworld.common.chunk.assembly.ChunkAssembler;
+import darkevilmac.movingworld.common.chunk.assembly.MovingWorldAssemblyInteractor;
+import darkevilmac.movingworld.common.entity.EntityMovingWorld;
+import darkevilmac.movingworld.common.entity.MovingWorldInfo;
+import darkevilmac.movingworld.common.util.LocatedBlockList;
 
 public abstract class TileMovingWorldMarkingBlock extends TileEntity implements IMovingWorldTileEntity {
 
-    public LocatedBlockList removedFluidBlocks; // A list of fluid blocks that were destroyed last disassemble, used to fill back in when we reassemble.
+    public LocatedBlockList removedFluidBlocks; // A list of fluid blocks that were destroyed last disassemble, used to
+                                                // fill back in when we reassemble.
     private AssembleResult assembleResult, prevResult;
 
     public TileMovingWorldMarkingBlock() {
@@ -85,7 +87,8 @@ public abstract class TileMovingWorldMarkingBlock extends TileEntity implements 
                 case AssembleResult.RESULT_OK_WITH_WARNINGS:
                     returnVal = true;
                 case AssembleResult.RESULT_BLOCK_OVERFLOW:
-                    c = new ChatComponentText("Cannot create moving world with more than " + getMaxBlocks() + " blocks");
+                    c = new ChatComponentText(
+                        "Cannot create moving world with more than " + getMaxBlocks() + " blocks");
                     player.addChatMessage(c);
                     break;
                 case AssembleResult.RESULT_MISSING_MARKER:
@@ -93,7 +96,8 @@ public abstract class TileMovingWorldMarkingBlock extends TileEntity implements 
                     player.addChatMessage(c);
                     break;
                 case AssembleResult.RESULT_ERROR_OCCURED:
-                    c = new ChatComponentText("An error occured while assembling moving world. See console log for details.");
+                    c = new ChatComponentText(
+                        "An error occured while assembling moving world. See console log for details.");
                     player.addChatMessage(c);
                     break;
                 case AssembleResult.RESULT_NONE:
@@ -107,7 +111,7 @@ public abstract class TileMovingWorldMarkingBlock extends TileEntity implements 
     }
 
     public void assembledMovingWorld(EntityPlayer player, boolean returnVal) {
-        //No Implementation.
+        // No Implementation.
     }
 
     public boolean mountMovingWorld(EntityPlayer player, EntityMovingWorld movingWorld) {
@@ -139,7 +143,6 @@ public abstract class TileMovingWorldMarkingBlock extends TileEntity implements 
         }
         return false;
     }
-
 
     public void undoCompilation(EntityPlayer player) {
         assembleResult = prevResult;
@@ -190,7 +193,8 @@ public abstract class TileMovingWorldMarkingBlock extends TileEntity implements 
         }
         if (compound.hasKey("res")) {
             assembleResult = new AssembleResult(compound.getCompoundTag("res"), worldObj);
-            assembleResult.assemblyInteractor = getNewAssemblyInteractor().fromNBT(compound.getCompoundTag("res"), worldObj);
+            assembleResult.assemblyInteractor = getNewAssemblyInteractor()
+                .fromNBT(compound.getCompoundTag("res"), worldObj);
         }
         if (compound.hasKey("removedFluidCompounds")) {
             removedFluidBlocks = new LocatedBlockList();
@@ -214,7 +218,10 @@ public abstract class TileMovingWorldMarkingBlock extends TileEntity implements 
 
         compound.setString("name", getInfo().getName());
         if (getInfo().getOwner() != null) {
-            compound.setString("owner", getInfo().getOwner().toString());
+            compound.setString(
+                "owner",
+                getInfo().getOwner()
+                    .toString());
         }
 
         compound.setInteger("meta", blockMetadata);

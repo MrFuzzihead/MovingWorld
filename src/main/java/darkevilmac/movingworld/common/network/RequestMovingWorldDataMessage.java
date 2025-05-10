@@ -1,9 +1,10 @@
 package darkevilmac.movingworld.common.network;
 
-import darkevilmac.movingworld.MovingWorld;
-import darkevilmac.movingworld.common.entity.EntityMovingWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+
+import darkevilmac.movingworld.MovingWorld;
+import darkevilmac.movingworld.common.entity.EntityMovingWorld;
 
 public class RequestMovingWorldDataMessage extends EntityMovingWorldMessage {
 
@@ -16,8 +17,7 @@ public class RequestMovingWorldDataMessage extends EntityMovingWorldMessage {
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player) {
-    }
+    public void handleClientSide(EntityPlayer player) {}
 
     @Override
     public void handleServerSide(EntityPlayer player) {

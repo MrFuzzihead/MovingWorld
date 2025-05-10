@@ -1,8 +1,8 @@
 package darkevilmac.movingworld.common.chunk.mobilechunk;
 
-import darkevilmac.movingworld.common.chunk.LocatedBlock;
-import darkevilmac.movingworld.common.entity.EntityMovingWorld;
-import darkevilmac.movingworld.common.tile.IMovingWorldTileEntity;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -14,13 +14,16 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.HashMap;
-import java.util.Map;
+import darkevilmac.movingworld.common.chunk.LocatedBlock;
+import darkevilmac.movingworld.common.entity.EntityMovingWorld;
+import darkevilmac.movingworld.common.tile.IMovingWorldTileEntity;
 
 public class MobileChunk implements IBlockAccess {
+
     public static final int CHUNK_SIZE = 16;
     public static final int CHUNK_SIZE_EXP = 4;
-    public static final int CHUNK_MEMORY_USING = CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * (4 + 2);    //(16*16*16 shorts and ints)
+    public static final int CHUNK_MEMORY_USING = CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * (4 + 2); // (16*16*16 shorts and
+                                                                                                 // ints)
 
     protected final World worldObj;
     protected final EntityMovingWorld entityMovingWorld;
@@ -223,8 +226,7 @@ public class MobileChunk implements IBlockAccess {
         return false;
     }
 
-    protected void onSetBlockAsFilledAir(int x, int y, int z) {
-    }
+    protected void onSetBlockAsFilledAir(int x, int y, int z) {}
 
     /**
      * Gets the TileEntity for a given block in this chunk

@@ -4,6 +4,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 
 public class AABBRotator {
+
     private static Vec3 vec00, vec01, vec10, vec11;
     private static Vec3 vec0h, vec1h, vech0, vech1;
 
@@ -56,7 +57,8 @@ public class AABBRotator {
         vech1.xCoord = (vec01.xCoord + vec11.xCoord) / 2D;
         vech1.zCoord = (vec01.zCoord + vec11.zCoord) / 2D;
 
-        aabb.setBounds(minX(), y0, minZ(), maxX(), y1, maxZ()).offset(xoff, 0F, zoff);
+        aabb.setBounds(minX(), y0, minZ(), maxX(), y1, maxZ())
+            .offset(xoff, 0F, zoff);
     }
 
     private static double minX() {

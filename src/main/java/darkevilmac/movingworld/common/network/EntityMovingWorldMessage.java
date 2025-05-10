@@ -1,12 +1,13 @@
 package darkevilmac.movingworld.common.network;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+
 import cpw.mods.fml.relauncher.Side;
 import darkevilmac.movingworld.MovingWorld;
 import darkevilmac.movingworld.common.entity.EntityMovingWorld;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 
 public abstract class EntityMovingWorldMessage extends MovingWorldMessage {
 
@@ -19,7 +20,6 @@ public abstract class EntityMovingWorldMessage extends MovingWorldMessage {
     public EntityMovingWorldMessage(EntityMovingWorld movingWorld) {
         this.movingWorld = movingWorld;
     }
-
 
     @Override
     public void encodeInto(ChannelHandlerContext ctx, ByteBuf buf, Side side) {

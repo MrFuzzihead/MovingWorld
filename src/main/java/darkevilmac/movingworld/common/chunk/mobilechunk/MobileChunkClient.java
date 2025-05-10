@@ -1,17 +1,19 @@
 package darkevilmac.movingworld.common.chunk.mobilechunk;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import darkevilmac.movingworld.common.entity.EntityMovingWorld;
-import darkevilmac.movingworld.client.render.MobileChunkRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import darkevilmac.movingworld.client.render.MobileChunkRenderer;
+import darkevilmac.movingworld.common.entity.EntityMovingWorld;
+
 @SideOnly(Side.CLIENT)
 public class MobileChunkClient extends MobileChunk {
+
     private MobileChunkRenderer renderer;
 
     public MobileChunkClient(World world, EntityMovingWorld movingWorld) {

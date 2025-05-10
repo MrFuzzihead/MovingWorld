@@ -1,12 +1,14 @@
 package darkevilmac.movingworld.common.network;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 import cpw.mods.fml.relauncher.Side;
 import darkevilmac.movingworld.common.entity.EntityMovingWorld;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class FarInteractMessage extends EntityMovingWorldMessage {
+
     public FarInteractMessage() {
         super();
     }
@@ -26,8 +28,7 @@ public class FarInteractMessage extends EntityMovingWorldMessage {
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player) {
-    }
+    public void handleClientSide(EntityPlayer player) {}
 
     @Override
     public void handleServerSide(EntityPlayer player) {

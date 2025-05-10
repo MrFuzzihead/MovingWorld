@@ -1,9 +1,10 @@
 package darkevilmac.movingworld.common.entity;
 
-import darkevilmac.movingworld.common.util.MaterialDensity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+
+import darkevilmac.movingworld.common.util.MaterialDensity;
 
 public abstract class MovingWorldCapabilities {
 
@@ -21,8 +22,7 @@ public abstract class MovingWorldCapabilities {
         clear();
     }
 
-    public void updateMovingWorldEntities() {
-    }
+    public void updateMovingWorldEntities() {}
 
     public int getBlockCount() {
         return blockCount;
@@ -30,12 +30,10 @@ public abstract class MovingWorldCapabilities {
 
     public void onChunkBlockAdded(Block block, int metadata, int x, int y, int z) {
         blockCount++;
-        if (autoCalcMass)
-            mass += MaterialDensity.getDensity(block);
+        if (autoCalcMass) mass += MaterialDensity.getDensity(block);
     }
 
-    public void postBlockAdding() {
-    }
+    public void postBlockAdding() {}
 
     public abstract boolean mountEntity(Entity entity);
 
@@ -80,10 +78,8 @@ public abstract class MovingWorldCapabilities {
         this.canFly = canFly;
     }
 
-    public void readFromNBT(NBTTagCompound tag) {
-    }
+    public void readFromNBT(NBTTagCompound tag) {}
 
-    public void writeToNBT(NBTTagCompound tag) {
-    }
+    public void writeToNBT(NBTTagCompound tag) {}
 
 }
