@@ -1,0 +1,46 @@
+package com.mrfuzzihead.movingworld.common.block;
+
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import com.mrfuzzihead.movingworld.common.tile.TileMovingWorldMarkingBlock;
+
+public abstract class BlockMovingWorldMarker extends BlockContainer {
+
+    protected BlockMovingWorldMarker(Material material) {
+        super(material);
+    }
+
+    public static void onPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
+        if (world != null && !world.isRemote && entity != null && entity instanceof EntityPlayer) {
+            if (world.getTileEntity(x, y, z) != null
+                && world.getTileEntity(x, y, z) instanceof TileMovingWorldMarkingBlock) {
+                TileMovingWorldMarkingBlock tile = (TileMovingWorldMarkingBlock) world.getTileEntity(x, y, z);
+                tile.getInfo()
+                    .setOwner(
+                        ((EntityPlayer) entity).getGameProfile()
+                            .getId());
+            }
+        }
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
+        super.onBlockPlacedBy(world, x, y, z, entity, itemStack);
+
+        if (world != null && !world.isRemote && entity != null && entity instanceof EntityPlayer) {
+            if (world.getTileEntity(x, y, z) != null
+                && world.getTileEntity(x, y, z) instanceof TileMovingWorldMarkingBlock) {
+                TileMovingWorldMarkingBlock tile = (TileMovingWorldMarkingBlock) world.getTileEntity(x, y, z);
+                tile.getInfo()
+                    .setOwner(
+                        ((EntityPlayer) entity).getGameProfile()
+                            .getId());
+            }
+        }
+    }
+}
